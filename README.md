@@ -6,11 +6,25 @@ man -k keyword
 
 실기요약 https://las311.tistory.com/16  
 
-
-centos 한글(일반적인 방법- /etc/locale.conf가 수정됨)  
+### centos 한글(일반적인 방법- /etc/locale.conf가 수정됨)  
 locale  
+localectl list-locale | grep ko  
 localectl set-locale LANG=ko_KR.utf8  
 source /etc/locale.conf  
 locale  
+
+
+외부 ssh 로 접속시 정상적으로 보임  
+ko_KR.euckr 까지 안되면, 터미널 뷰 자체의 문제일 수 있음  
+
+### ssh 방화벽설정 centos  
+rpm -qa | grep ssh  
+filewall-cmd --permanent --list-all --zone=dmz  
+firewall-cmd --permanent --zone=public --add-port=22/tcp  
+virtualbox forwarding  
+host ipconfig  
+guest hostname -I (주로 10.0.2.15  )
+
+공유기 forwarding (tcp  )
 
 
