@@ -17,13 +17,13 @@ locale
 외부 ssh 로 접속시 정상적으로 보임  
 ko_KR.euckr 까지 안되면, 터미널 뷰 자체의 문제일 수 있음  
 
-### ssh 방화벽설정 centos  
+### ssh 방화벽설정 centos7  
 rpm -qa | grep ssh  
 filewall-cmd --permanent --list-all --zone=dmz  
 firewall-cmd --permanent --zone=public --add-port=22/tcp  
 virtualbox forwarding  
-host ipconfig  
-guest hostname -I (주로 10.0.2.15  )
+host(윈도우에서 확인) ipconfig  
+guest(centos에서 확인) hostname -I (주로 10.0.2.15  )
 
 공유기 forwarding (tcp  )
 
