@@ -6,6 +6,18 @@ man -k keyword
 
 실기요약 https://las311.tistory.com/16  
 
+
+### centos virtualbox 해상도조정  
+/etc/grub2.cfg 에서 linuz 검색하여 맨 끝에 vga=773 으로 변경하여 재부팅  
+773: 1024x768  
+775: 1280x1024  
+
+### centos yum 이슈시  
+yum install epel-release  
+or  
+yum clean all & yum clean metadata  
+
+
 ### centos 한글(일반적인 방법- /etc/locale.conf가 수정됨, [TUI에서는 한글깨진다고함](https://ipex.tistory.com/entry/CentOS7-TextMode-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%EA%B9%A8%EC%A7%90-%ED%98%84%EC%83%81?category=771640)    
 locale  
 localectl list-locale | grep ko  
