@@ -28,3 +28,18 @@ guest(centos에서 확인) hostname -I (주로 10.0.2.15  )
 공유기 forwarding (tcp  )
 
 
+### how to copy on tmux screen  
+```
+C-b [  
+spacebar
+...
+enter
+C-b ]
+```
+
+tmux set-option -g mode-keys vi   
+or  
+set-option -g mode-keys vi   
+at ~/.tmux.conf  
+source-file ~/.tmux.conf  
+on
