@@ -34,6 +34,10 @@ NameVirtualHost 192.168.5.13:80
 	Deny from All
 	Allow from 192.168.22.
 </Directory>
+
+ErrorDocument 403 /forbidden.html
+ErrorDocument 401 /unauth.html
+ErrorDocument 404 /not_found.html
 =========================================================
 
 
@@ -42,9 +46,9 @@ NameVirtualHost 192.168.5.13:80
 *SEVER-SIDE
 service rpcbind start
 
-ypserv
-yppasswd
-ypxfrd
+service ypserv start
+service yppasswd start
+service ypxfrd start
 
 nisdomainname test.co.kr 
 (or set: /etc/sysconfig/network NISDOMAIN=test.co.kr)
@@ -53,7 +57,7 @@ nisdomainname test.co.kr
 
 
 *CLIENT-SIDE
-ypbind
+service ypbind start
 yp-tools
 
 ypwhich 
@@ -95,12 +99,15 @@ service smb restart
 	path = /tmp
 	read only = No
 	writable = yes
-	valid users = posein
+	valid users = posein yuloje
 	public = yes
 	write list = @insa
 
+'127.' is localsystem
+
 *CLIENT-SIDE
 smbclient -L 192.168.1.1 -U root@1234
+smbclient //192.168.1.1/share
 smbstatus
 testparm
 testparm /etc/samba/smb.conf wwww 192.168.1.1
@@ -114,3 +121,37 @@ smbpasswd -d posein
 pdbedit -a posein
 pdbedit -L -v
 =========================================================
+
+
+#NFS (Newtwork File System)
+---------------------------------------------------------
+*SERVER-SIDE
+service rpcbind start
+service nfs start
+
+rpcinfo
+rpcinfo -s 192.168.1.1
+
+
+/etc/exports
+/nfs_director1 192.168.1.1
+/nfs_director2 192.168.1.0/255.255.255.0(rw,root_squash)
+/nfs_director3 192.168.12.0/24(rw,no_root_squash)
+/nfs_nobody *.public.com(rw,all_squash)
+
+exportfs
+
+showmount
+showmount -e
+showmount -e 192.168.1.1
+
+nfsstat (SERVER/CLIENT all-side)
+
+*CLIENT-SIDE
+mount -t nfs 192.168.1.1:/nfs_directory1 /mnt
+mount 192.168.1.1:/nfs_directory2 /mnt
+
+/etc/fstab
+192.168.1.1:/nfs_diretory3 /mnt nfs timeo=15,soft,retrans=3 0 0
+=========================================================
+
