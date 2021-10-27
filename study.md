@@ -105,6 +105,7 @@ service smb restart
 
 '127.' is localsystem
 
+
 *CLIENT-SIDE
 smbclient -L 192.168.1.1 -U root@1234
 smbclient //192.168.1.1/share
@@ -132,7 +133,6 @@ service nfs start
 rpcinfo
 rpcinfo -s 192.168.1.1
 
-
 /etc/exports
 /nfs_director1 192.168.1.1
 /nfs_director2 192.168.1.0/255.255.255.0(rw,root_squash)
@@ -147,6 +147,7 @@ showmount -e 192.168.1.1
 
 nfsstat (SERVER/CLIENT all-side)
 
+
 *CLIENT-SIDE
 mount -t nfs 192.168.1.1:/nfs_directory1 /mnt
 mount 192.168.1.1:/nfs_directory2 /mnt
@@ -155,3 +156,23 @@ mount 192.168.1.1:/nfs_directory2 /mnt
 192.168.1.1:/nfs_diretory3 /mnt nfs timeo=15,soft,retrans=3 0 0
 =========================================================
 
+
+#vsftpd (FTP)
+---------------------------------------------------------
+*SERVER-SIDE
+service vsftpd start
+
+/etc/vsftpd/vsftpd.conf
+anonymous_enable=YES
+local_enable=YESE
+anon_upload_enable=NO
+anon_mkdir_write_enable=NO
+chroot_local_user=YES
+data_connection_timeout=120
+local_umask=002
+listen_port=21
+xferlog_enable=YES
+
+userlist_deny Default: YES
+/etc/vsftpd/user_list
+=========================================================
