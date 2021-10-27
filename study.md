@@ -176,3 +176,49 @@ xferlog_enable=YES
 userlist_deny Default: YES
 /etc/vsftpd/user_list
 =========================================================
+
+
+#sendmail
+---------------------------------------------------------
+*SERVER-SIDE
+yum install sendmail
+yum install devecot
+service sendmail start
+
+/etc/mail/sendmail.cf
+
+/etc/mail/local-host-names
+posein.org
+posein.co.kr
+
+m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf
+
+/etc/mail/access
+From:spammer@aol.com REJECT
+Connect:192.168.5 DISCARD
+To:posein.org RELAY
+
+makemap hash /etc/mail/access < /etc/mail<access
+
+/etc/aliases
+webmaster: posein, yuloje, posein@naver.com
+admin::include:/etc/mail/admgroup
+
+newaliases
+sendmail -bi
+sendmail -I
+
+1_SERVER-N_domain
+/etc/mail/virtusertable
+ceo@linux.com posein
+ceo@window.com yuloje
+@posein.org posein@naver.com
+
+makemap hash /etc/mail/virusertable < /etc/mail/virtusertable
+
+each user forwarding
+vi ~/.forward
+posein@naver.com
+posein@gmail.com
+chmod 600 .forward
+=========================================================
