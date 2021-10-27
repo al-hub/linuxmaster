@@ -69,3 +69,48 @@ server nis.test.co.kr
 ypserver nis.test.co.kr
 domain test.co.kr
 =========================================================
+
+
+#SAMBA
+---------------------------------------------------------
+*SEVER-SIDE
+/etc/rc.d/init.d/smb start
+service smb restart
+
+/etc/samba/smb.conf
+[global]
+	workgroup = SHARE_GROUP_NAME
+	server string = explain server
+	netbios name = CONNECT_NAME_FROM_WINDOW
+	interfaces = lo eth0 192.168.12.2/24
+	hosts allow = 127. 192.168.1.
+	hosts allow = posein_pc, yuloje_pc
+
+	log file = /var/log/samba/log.%m
+	max log size = 50
+	security = user
+	passdb backend = tdbsam
+[share]
+	comment = comment message
+	path = /tmp
+	read only = No
+	writable = yes
+	valid users = posein
+	public = yes
+	write list = @insa
+
+*CLIENT-SIDE
+smbclient -L 192.168.1.1 -U root@1234
+smbstatus
+testparm
+testparm /etc/samba/smb.conf wwww 192.168.1.1
+nmblookup -U 192.168.1.1 -R 'NAME'
+nmblookup '*'
+mount.cifs //192.168.1.1/photo /mnt
+smbpasswd -a posein
+smbpasswd posein
+smbpasswd -x posein
+smbpasswd -d posein
+pdbedit -a posein
+pdbedit -L -v
+=========================================================
