@@ -222,3 +222,82 @@ posein@naver.com
 posein@gmail.com
 chmod 600 .forward
 =========================================================
+
+
+#DNS
+---------------------------------------------------------
+*SERVER-SIDE
+service named start
+
+/etc/named.conf
+acl "member" {192.168.1.32; 192.168.1.35; 192.168.1/24;};
+options {
+	directory	"/var/named";
+	allow-transter {192.168.0/24;};
+	forward only; (or first)
+	forwarder	{203.247.32.31;};
+	allow-query	{member;};
+};
+
+//root domain server, hint is root zone server
+zone "." IN {
+	type hint; 
+	file "named.ca";
+};
+
+zone "linux.or.kr" IN {
+	type master;
+	file "linux.zone";
+};
+
+zone "1.168.192.in-addr.arpa" IN {
+	type master;
+	file "linux.rev";
+};
+
+
+chown root.named linux.zone
+chmod 640 linux.zone
+
+linux.zone
+$TTL 1D
+@       IN SOA  ns.linux.or.kr. posein.linux.or.kr. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      ns.linux.or.kr.
+        A       192.168.1.35
+	MX	10
+ns	A	192.168.1.35
+www	A	192.168.1.35
+www1	CNAME	www
+www1	CNAME	www
+
+
+linux.rev
+$TTL 1D
+@       IN SOA  ns.linux.or.kr. posein.linux.or.kr. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        NS      ns.linux.or.kr.
+15	PTR	linux.or.kr.
+15	PTR	ns.linux.or.kr.
+15	PTR	www.linux.or.kr.
+
+A:IPv4 address
+AAAA:IPv6 address
+NS:domain nameserver
+MX:mail exchange server, number is priority
+CNAME: alias
+
+PTR : ip address to domain for reverse zone
+
+named-checkconf /etc/named.conf
+named-checkzone www /var/named/named.localhost
+=========================================================
+
