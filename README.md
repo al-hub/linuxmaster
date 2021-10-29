@@ -3,6 +3,7 @@
 ### usefull keyword
 [apropos](https://en.wikipedia.org/wiki/Apropos_(Unix))  
 man -k keyword  
+document /usr/share/doc  
 
 실기요약 https://las311.tistory.com/16  
 
@@ -39,6 +40,42 @@ guest(centos에서 확인) hostname -I (주로 10.0.2.15  )
 
 공유기 forwarding (tcp  )
 
+### ssh port change  
+port list: cat /etc/services  
+acess: ssh -vvvvvv -p 443 id@host  
+
+ssh port add example : 443  
+```
+#SElinux
+  semanage port -m -t ssh_port_t -p tcp 443
+  semange port -l | grep ssh
+
+#Firewall (for CentOS 7, reject is --zone=drop)
+  firewall-cmd --add-port=443/tcp --permanent --zone=public
+  firewall-cmd --reload
+  firewall-cmd --list-all (or --list-all-zones)
+
+#Firewall (for CentOS 6)
+  iptables -I INPUT 5 -p tcp -m state --state NEW --dport 443 -j ACCEPT
+  service iptables save
+
+# etc/ssh/sshd_config (Add 443, check X11Forwarding yes)
+  sed -i -e "s/\# *Port 22/Port 22\nPort 443/"/etc/ssh/sshd_config
+  systemctl reload sshd
+  systemctl restart sshd (or service restart sshd)
+
+# netstat
+   netstat -anlp | grep sshd
+   
+   
+*RSA (2048 bit)
+*Client generate
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+
+*Server register (setting /etc/ssh/sshd_config)
+~/.ssh/authorized_keys
+```
 
 ### how to copy on tmux screen  
 ```
