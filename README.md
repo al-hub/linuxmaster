@@ -63,6 +63,15 @@ ssh port add example : 443
 
 # netstat
    netstat -anlp | grep sshd
+   
+   
+*RSA (2048 bit)
+*Client generate
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+
+*Server register (setting /etc/ssh/sshd_config)
+~/.ssh/authorized_keys
 ```
 
 ### how to copy on tmux screen  
