@@ -1,5 +1,3 @@
-
-
 #apache (httpd.conf)
 ---------------------------------------------------------
 httpd -t
@@ -301,3 +299,135 @@ named-checkconf /etc/named.conf
 named-checkzone www /var/named/named.localhost
 =========================================================
 
+
+#TCP wrapper , xinetd
+---------------------------------------------------------
+/etc/hosts.deny <- work later
+ALL : ALL
+
+/etc/hosts.allow <- work first
+ALL : localhost, .posein.org
+in.telnetd : 192.168.1.35
+sshd : .posein.com EXCEPT cracker.posein.com
+ALL EXCEPT vstfpd : .ihd.or.kr EXCEPT bad.ihd.or.kr
+in.telnetd, vsftpd : 192.168.1., .snu.kr
+ALL : ALL : DENY
+
+/etc/xinetd.conf
+defaults
+{
+	log_type = FILE /var/log/xinetd.log
+	log_on_failure = HOST (or USERID or ATTEMPT)
+	log_on_success = PID HOST USERID EXIT DURATION TRAFFIC
+
+	cps = 50 10   (50 is #req, 10 is sec )
+
+	instances = #MAX demon of xinted 
+
+	per_source = #MAX service from IP
+
+	only_from = 192.169.5.13 192.168.1.0/24
+
+	no_access = 192.168.1.35
+
+	enable = telnet rlogin
+	disable = rsync
+}
+
+service telent
+{
+	disable	= no (no is enable)
+	flags	= REUSE
+	socket_type	= stream (or dgram, raw, seqpacket)
+	wait	= no (no is multi-thread)
+	user	= root
+	server	= /usr/sbin/in.telnetd
+	log_on_failure	+= USERID
+	access_times	= 01:00-07:00
+	redirect	= 192.168.12.22 23
+	port	= 8080
+	nice	= 10
+}
+=========================================================
+
+
+#Squid ( proxy )
+---------------------------------------------------------
+/etc/squid/squid.conf
+http_port 3128
+cache_dir ufs /var/spool/squid 100 16 256 
+#100 is MB, 16 is directory, 256 is sub-directory
+
+#ex1: approve
+acl posein src 192.168.4.0/255.255.255.0
+
+http_access allow posein
+http_access deny all
+
+#ex2: deny
+acl cracker src 192.168.3.0/255.255.255.0
+
+http_acess deny cracker
+http_acess allow all
+
+#ex3: deny from domain
+acl cracker srcdomain .cracker.org
+
+http_acess deny cracker
+http_acess allow all
+
+#ex4: approve from domain
+acl example srcdomain .example.com
+
+http_access allow .example.com
+http_access deny all
+
+#ex5: block site
+acl exploit dstdomain .exploit-db.com
+
+http_access deny exploit
+http_access allow all
+=========================================================
+
+
+#DHCP ( Dynamic Host Configuration Protocol )
+---------------------------------------------------------
+/etc/dhcp/dhcpd.conf
+
+service dhcpd start
+subnet 10.5.5.0 netmask 255.255.255.224 {
+  range 10.5.5.26 10.5.5.30;
+  option domain-name-servers ns1.internal.example.org;
+  option domain-name "internal.example.org";
+  option routers 10.5.5.1;
+  option broadcast-address 10.5.5.31;
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+
+host passacaglia {
+  hardware ethernet 0:0:c0:5d:bd:95;
+  filename "vmunix.passacaglia";
+  server-name "toccata.fugue.com";
+}
+=========================================================
+
+
+#VNC , NTP
+---------------------------------------------------------
+/etc/sysconfig/vncservers
+VNCSERVERS="2:root"
+VNCSERVERARGS[2]="-geoetry 1024x768"
+
+vncpasswd
+service vncserver start
+
+/etc/ntp.conf
+driftfile /var/lib/ntp/drift
+restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
+server time.kriss.re.kr
+server time.bora.net
+
+ntpq 
+ntpdate 192.168.1.80
+=========================================================
