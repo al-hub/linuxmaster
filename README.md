@@ -41,6 +41,9 @@ guest(centos에서 확인) hostname -I (주로 10.0.2.15  )
 공유기 forwarding (tcp  )
 
 ### ssh port change  
+port list: cat /etc/services  
+acess: ssh -vvvvvv -p 443 id@host  
+
 ssh port add example : 443  
 ```
 #SElinux
