@@ -57,7 +57,7 @@ ssh port add example : 443
 
 #Firewall (for CentOS 6)
   iptables -I INPUT 5 -p tcp -m state --state NEW --dport 443 -j ACCEPT
-  service iptables save
+  iptables-save
 
 # etc/ssh/sshd_config (Add 443, check X11Forwarding yes)
   sed -i -e "s/\# *Port 22/Port 22\nPort 443/"/etc/ssh/sshd_config
