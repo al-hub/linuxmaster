@@ -459,7 +459,7 @@ iptable -A OUTPUT -p tcp --dport 80 -d www.posein.org -o eth0 -j DROP
 iptable -A FORWARD -p tcp --dport 80 -d www.posein.org -o eth0 -j DROP
 
 #ALL drop Except
-iptable -P INPUT DRoP
+iptable -P INPUT DROP
 iptable -A INPUT -s 10.220.1.100 -j ACCEPT
 
 
