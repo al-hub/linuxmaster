@@ -431,3 +431,44 @@ server time.bora.net
 ntpq 
 ntpdate 192.168.1.80
 =========================================================
+
+
+#iptables ( firewalld )
+---------------------------------------------------------
+#show list
+iptables -L
+iptables-save
+iptables-save -nat
+
+#save and resore
+iptables-save > firewall.sh
+iptables-restore < firewall.sh
+
+#flush
+iptables -F 
+
+#append
+iptables -A INPUT -s 192.168.1.0/24 -p icmp -j ACCEPT
+
+#delete
+iptables -D INPUT 2
+iptables -D INPUT -s 192.168.1.5 -p icmpt -j DROP
+
+#block
+iptable -A OUTPUT -p tcp --dport 80 -d www.posein.org -o eth0 -j DROP
+iptable -A FORWARD -p tcp --dport 80 -d www.posein.org -o eth0 -j DROP
+
+#ALL drop Except
+iptable -P INPUT DRoP
+iptable -A INPUT -s 10.220.1.100 -j ACCEPT
+
+
+#NAT
+iptables -t nat -A PREROUTING -p tcp -d 1.235.51.26 --dport 443 -j DNAT --to 192.168.1.35:443
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT 1.235.51.26
+
+
+#firewalld
+firewall --list-all
+firewalld --add-service=http --zone=public --permanent 
+=========================================================
