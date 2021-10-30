@@ -193,7 +193,7 @@ m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf
 
 /etc/mail/access
 From:spammer@aol.com REJECT
-Connect:192.168.5 DISCARD
+Connect:192.168.1 DISCARD
 To:posein.org RELAY
 
 makemap hash /etc/mail/access < /etc/mail<access
@@ -228,10 +228,10 @@ chmod 600 .forward
 service named start
 
 /etc/named.conf
-acl "member" {192.168.1.32; 192.168.1.35; 192.168.1/24;};
+acl "member" {192.168.1.32; 192.168.1.35; 192.168.1.0/24;};
 options {
 	directory	"/var/named";
-	allow-transter {192.168.0/24;};
+	allow-transfer {192.168.1.0/24;};
 	forward only; (or first)
 	forwarder	{203.247.32.31;};
 	allow-query	{member;};
@@ -310,7 +310,7 @@ ALL : localhost, .posein.org
 in.telnetd : 192.168.1.35
 sshd : .posein.com EXCEPT cracker.posein.com
 ALL EXCEPT vstfpd : .ihd.or.kr EXCEPT bad.ihd.or.kr
-in.telnetd, vsftpd : 192.168.1., .snu.kr
+in.telnetd, vsftpd : 192.168.1.0/255.255.255.0, .snu.kr
 ALL : ALL : DENY
 
 /etc/xinetd.conf
@@ -471,4 +471,13 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT 1.235.51.26
 #firewalld
 firewall --list-all
 firewalld --add-service=http --zone=public --permanent 
+=========================================================
+
+
+#network range
+---------------------------------------------------------
+#show list
+192.168.1 #sendmail
+192.168.1.0/24 #xinetd, DNS
+192.168.1.0/255.255.255.0 #most of all
 =========================================================
