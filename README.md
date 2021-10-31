@@ -117,3 +117,24 @@ set-option -g mode-keys vi
 at ~/.tmux.conf  
 source-file ~/.tmux.conf  
 on
+
+
+### printer setting [CUPS](https://zosystem.tistory.com/196)
+```
+vi /etc/cups/cupsd.conf
+<Location />
+  Order allow,deny
+  Allow 192.168.1.0/24
+</Location>
+
+systemctl status cups
+
+firewall-cmd --permanent --add-service=ipp
+firewall-reload
+
+yum install splix (samsung printer)
+
+lpinfo --make-and-model samsung -m | grep my_priner
+
+lpr -P NAME -H 192.168.1.69:631 document.txt
+```
