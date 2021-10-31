@@ -7,6 +7,7 @@ useradd posein -d /home-mc/posein -g linux
 useradd -D
 useradd -D -b /home-mc -s /bin/zsh -e 2021-12-31
 /etc/default/useradd 	#home, shell /bin/dash directory.
+
 /etc/login.defs 	#UID/GID, encrypt information. 
 /etc/skel       	#Diretory containing default files.
 
@@ -17,10 +18,10 @@ usermod -s /bin/zsh posein
 usermod -d /home-mc/posein -m posein
 
 passwd -S posein
-passwd -l posein #lock
-passwd -u posein #unlock
-passwd -d posein #remove passwd only , login ok
-passwd -e posein #must change next-time password
+passwd -l posein 	#lock
+passwd -u posein 	#unlock
+passwd -d posein 	#remove passwd only , login ok
+passwd -e posein 	#must change next-time password
 passwd -n 10 -x 100 -w 5 -i 5 posein
 
 chage -m 10 -M 100 -W 5 -I 3 posein #min,MAX,warnning,inactvie
@@ -32,29 +33,29 @@ username:password:UID:GID:fullname:home-directory:shell
 /etc/shawdow
 username:password:last:may:must:warn:expire:disable:reserved
 
-grpconv #make /etc/gshadow
-grpck #group check
+grpconv 		#make /etc/gshadow
+grpck 			#group check
 groupadd/groupdel
 groupmod -n new_group old_group
 gpasswd -A posein terran
 
-newgrp #temporary group change , exit
+newgrp 			#temporary group change , exit
 
 who / whoami / w
-uname -r #kernel release information 
+uname -r 		#kernel release information 
 
 last #login/reboot information 
 last posein
 last reboot
-last -f /var/log/wtmp #wtmp binary
+last -f /var/log/wtmp 	#wtmp binary
 
-lastb #login fail information
-lastb -f /var/log/btmp #btmp binary
+lastb 			#login fail information
+lastb -f /var/log/btmp 	#btmp binary
 
 lastlog #last login information for each user
 lastlog -u posein
-lastlog -t 3 # inner 3day
-lastlog -b 3 # before 3day
+lastlog -t 3 		#inner 3day
+lastlog -b 3 		#before 3day
 ========================================================
 
 
@@ -80,8 +81,8 @@ ext2(2GB), ext3(16TB), ext4(1EB), xfs(8EB), vfat(win FAT32), nfs, cifs
 mount -t ext4 -o ro /dev/sdb1 /mmn
 mount -t cifs -o useranme=admin,pasword='1234' //192.168.1.35/data /net_drive
 
-mount           #sysfs on /sys type sysfs (fw,...
-cat /etc/mtab   #sysfs /sys sysfs rw ...
+mount           	#sysfs on /sys type sysfs (fw,...
+cat /etc/mtab   	#sysfs /sys sysfs rw ...
 
 
 fdisk -l  #including USB, cat /proc/partitions
@@ -93,7 +94,7 @@ mke2fs -t ext4 /dev/sdc1
 mke2fs -j -b 4096 -R stride=32 /dev/md0 #raid md0,  block size 4096, 32byte/stripe
 
 fsck /dev/sdb1
-e2fsck -y /dev/sda3 #forced yes
+e2fsck -y /dev/sda3 	#forced yes
 
 df -hT
 du -h --max-depth=1
@@ -113,12 +114,12 @@ blkid #block device UUID LABEL check
 
 *SWAP
 mkswap /swap-file 10240 #as memory
-mkswap -c /dev/sdb2 #mk swap patition after checking bad block
-swapon swap-file #enable 
-swapon -a        #enable all
-swapoff -a       #disable all
+mkswap -c /dev/sdb2 	#mk swap patition after checking bad block
+swapon swap-file 	#enable 
+swapon -a        	#enable all
+swapoff -a       	#disable all
 
-free #/proc/meminfo
+free 			#/proc/meminfo
 
 *MAKE-SWAP FILE
 dd if=/dev/zero of=/swap-file bs=1ks count=1024000 #1GB file
@@ -143,13 +144,82 @@ setquota -t 86400 28800 /home #limit 1day, I-node 8 hour
 
 vi /etc/fstab -> filed4: usrquota 
 mount -o remount /home
-quotacheck /home #make file
+quotacheck /home 	#make file
 quotacheck -mf /home
-edquota posein   #group: edquota -g terran
+edquota posein   	#group: edquota -g terran
 quotaon /home
-repquota /home   #group: repquota -g /home 
+repquota /home   	#group: repquota -g /home 
 
 *LINK
 ln src.file hard-link.file
 ln -s src.file soft-link.file
+========================================================
+
+
+# processor manage
+---------------------------------------------------------
+ps -ef
+ps aux
+
+pstree
+
+top -d 2 -p PID
+
+jobs #backgroup process
+fg
+bg
+
+nice --10 bash 		#add from bash
+renice 10 PID  		#direct change
+
+nohub tar cvf source.tar /opt/src &
+
+pgrep httpd
+pgrep -u posein,yuloje
+
+pkill -9 -u yuloje
+
+ls -l /proc/PID/exe
+/proc/cpuinfo
+/proc/meminfo
+/proc/mdstat 				#raid
+/proc/verstion				#uname -r
+/proc/partitions
+
+crontab -e -u posein		
+0/10 * * * * /etch/10mintue.sh		#* * * * * #min hour day month week
+========================================================
+
+
+# inatall (configure -> make -> make install)
+---------------------------------------------------------
+tar cvf posein.tar posein/
+tar Jxvf php.tar.xz -C /usr/local/src
+
+zip posein posein.tar
+unzip posein.zip
+
+gcc -o my_cal main.c sum.c
+
+rpm -Uhv my.rpm			#install
+rpm -e eog			#erase
+rpm -e httpd --nodeps		#remove depdency
+
+rpm -qa				#query all
+rpm -qi sendmail		#info
+rpm -ql	sendmail		#list
+rpm -qc sendmail		#config
+rpm -qR sendmail		#dependency list
+rpm -qf /usr/sbin/sendmail 	#where from
+ldd -v /usr/sbin/sendmail	#check shared libarary
+
+rpm -qip sendmail.rpm
+rpm -qlp sendmail.rpm
+
+yum install telnet-server
+yum remove telnet-server
+
+libarary
+/etc/ld.so.conf
+ldconfig -p 
 ========================================================
