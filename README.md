@@ -19,16 +19,38 @@ or
 yum clean all & yum clean metadata  
 
 
-### centos 한글(일반적인 방법- /etc/locale.conf가 수정됨, [TUI에서는 한글깨진다고함](https://ipex.tistory.com/entry/CentOS7-TextMode-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%EA%B9%A8%EC%A7%90-%ED%98%84%EC%83%81?category=771640)    
+### centos 한글(일반적인 방법- /etc/locale.conf가 수정됨) [TUI에서는 한글깨진다고함](https://ipex.tistory.com/entry/CentOS7-TextMode-%EC%97%90%EC%84%9C-%ED%95%9C%EA%B8%80-%EA%B9%A8%EC%A7%90-%ED%98%84%EC%83%81?category=771640)
 locale  
 localectl list-locale | grep ko  
 localectl set-locale LANG=ko_KR.utf8  
 source /etc/locale.conf  
 locale  
 
-
 외부 ssh 로 접속시 정상적으로 보임  
 ko_KR.euckr 까지 안되면, 터미널 뷰 자체의 문제일 수 있음  
+
+### [root 암호 응급복구](https://it-serial.com/entry/Linux-Grub%EA%B0%9C%EB%85%90%EC%95%94%ED%98%B8-%EC%84%A4%EC%A0%95-%EC%9D%91%EA%B8%89-%EB%B3%B5%EA%B5%ACroot-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%B0%BE%EA%B8%B0)
+```
+1. 부팅화면에서 'e' 누른다.
+
+2. 내용 중, linux16에서
+ro -> rw
+rhgb quiet LANG=en_US.UTF-8 -> init /bin/sh 
+로 바꾸고,
+'ctrl-x' 누른다.
+
+3. vi /etc/sysconfig/selinux 에서
+SELINUX=disable
+로 바꾼다.
+
+4. passwd 로 신규암호 입력한다.
+
+5. /sbin/reboot -f 재부팅 한다.
+
+6.  vi /etc/sysconfig/selinux 에서
+SELINUX = enforcing 
+로 복구한다.
+```
 
 ### ssh 방화벽설정 centos7  
 rpm -qa | grep ssh  
