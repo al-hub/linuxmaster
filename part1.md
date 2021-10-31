@@ -30,8 +30,11 @@ chage -E 2021-12-31 posein
 /etc/passwd
 username:password:UID:GID:fullname:home-directory:shell
 
-/etc/shawdow
+/etc/shadow
 username:password:last:may:must:warn:expire:disable:reserved
+
+visudo #/etc/sudoers
+posein ALL=ALL
 
 grpconv 		#make /etc/gshadow
 grpck 			#group check
@@ -271,3 +274,74 @@ lp -n 2 -P ML-2070 part1.txt
 ========================================================
 
 
+# rsyslog
+---------------------------------------------------------
+service rsyslog restart
+/etc/rsyslog.conf
+facility.priority action	#facility: cron, auth, authpriv, kern, mail
+				#priority: none, debug, info, notice, warn, err, crit, alert, emerg, panic
+				#action: file, @host(UDP), @@host(TCP), :omusrmsg:
+
+*.=crit;kern.none	/var/log/critical
+*.emerg			:omusrmsg:*
+authpriv.*		:omusrmsg:root,posein
+authpriv.*		/dev/tty2
+mail.*;mail.!=info	/var/log/maillog
+uucp,news.crit		/var/log/news
+
+logrotate -f /etc/logrotate.conf
+
+/var/log/httpd/access.log{
+	rotate 5
+	mail posein@gmail.com
+	size 100k
+	missingok
+	dateext
+	postrotate
+		/usr/bin/killall -HUP httpd
+	endscript
+}
+
+/var/log/secure		#auth log
+/var/log/maillog	#sendmail, dovecot
+/var/log/dmesg		#boot log
+========================================================
+
+
+# security
+---------------------------------------------------------
+grub password
+grub
+md5crypt
+vi /boot/grub/grub.conf
+password --md5
+
+*sysctl		#kernel control (/proc/sys_
+echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_all
+ping -c 2 localhost
+
+sysctl -a		#print all parameter
+sysctl -p		#/etc/sysctl.conf
+sysctl -n net.ipv4.icmp_echo_ignore_all
+sysctl -w net.ipv4.icmp_echo_ignore_all=0
+
+*ssh
+*SERVER-SIDE
+service sshd start
+/etc/ssh/sshd_config
+
+*CLIENT-SIDE
+ssh -p 22 root@192.168.1.35
+ssh-keygen 		#id_rsa, id_rsa.pub -> copy server .ssh/authorized_keys
+
+lsattr /etc/passwd
+chattr +a /var/log/messages	#append only
+chattr +i /etc/services		#ignore: not change
+chattr -i +a /etc/services
+
+acl
+getfacl	/etc/passwd		#file access control list
+setfacl	-m u:posein:rw test.txt
+
+nmap -O -p 1-1024 localhost
+========================================================
