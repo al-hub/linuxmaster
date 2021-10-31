@@ -223,3 +223,51 @@ libarary
 /etc/ld.so.conf
 ldconfig -p 
 ========================================================
+
+
+# Module
+---------------------------------------------------------
+/lib/modules/3...../kernel/dirvers/acpi
+lsmod
+insmod cdrom.ko
+rmmod cdrom
+
+modprobe cdrom			#depdency ok
+modinfo cdrom.ko
+
+depmod				#modules.dep update
+/lib/modules/3...../modules.dep
+
+*kernel compile
+tar Jxvf linux.xz
+cd linux
+make clean			#*.o
+make distclean			#all remove
+
+make mrproper			#initial: *.o, *.conf, *.bak
+make menuconfig
+make bzImage			#kernel image
+make modules
+make modules_install
+make install
+========================================================
+
+
+# addtional device
+---------------------------------------------------------
+*add disk
+fdisk -l
+fdisk /dev/sdb
+reboot
+mkfs -t ex4 /dev/sdb1
+mkdir /backup
+mount -t ext4 /dev/sdb1 /backup
+vi /etc/fstab
+/dev/sdb1 /backup ext4 defaults 1 1
+
+*print
+lpr -# 2 -P ML-2070 part1.txt
+lp -n 2 -P ML-2070 part1.txt
+========================================================
+
+
