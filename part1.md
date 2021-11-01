@@ -345,3 +345,39 @@ setfacl	-m u:posein:rw test.txt
 
 nmap -O -p 1-1024 localhost
 ========================================================
+
+
+# backup
+---------------------------------------------------------
+*tar
+tar cvfp home.tar /home
+tar xvf home.tar
+
+tar -g list -cvfp home.tar /home
+tar xvf home.tar -C
+
+tar -N '13 Oct 2021' -cvf home.tar /home
+
+tar cvfz /home | split -b 10m - home.tar.gz
+cat home.tar.gz | tar zxvf -
+
+*cpio
+find /home | cpio -ocv > home.cpio
+cpio -icvd < home.cpio
+
+ls *.conf | cpio -ocv > conf.cpio
+cpio -icvt < conf.cpio
+
+*dump/restore
+dump -0u -f backup.dump /dev/sda7
+restore -rf backup.dump
+
+*dd
+dd if=/dev/sda1 of=/dev/sdb1 bs=1k
+
+*rsync
+rsync -av /home /home5			#/home -> /home5
+rsync -avz 192.168.1.35:/home /backup
+rsync -avz -e ssh root@192.168.1.35:/home /backup
+rsync -av /home 192.168.1.35:/backup
+========================================================
