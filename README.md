@@ -64,6 +64,7 @@ host(윈도우에서 확인) ipconfig
 guest(centos에서 확인) hostname -I (주로 10.0.2.15  )
 
 공유기 forwarding (tcp  )
+VMWARE/VirtualPC forwarding 확인필요!
 
 ### ssh port change  
 port list: cat /etc/services  
