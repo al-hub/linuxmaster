@@ -1,5 +1,6 @@
-#apache (httpd.conf)
+#apache (httpd.conf)  
 ---------------------------------------------------------
+```
 httpd -t
 httpd -l
 httpd -S
@@ -36,11 +37,13 @@ NameVirtualHost 192.168.5.13:80
 ErrorDocument 403 /forbidden.html
 ErrorDocument 401 /unauth.html
 ErrorDocument 404 /not_found.html
+```
 =========================================================
 
 
-#NIS (Network Information Service, LDAP) for user,passwd
+#NIS (Network Information Service, LDAP) for user,passwd  
 ---------------------------------------------------------
+```
 *SEVER-SIDE
 service rpcbind start
 
@@ -70,11 +73,13 @@ yppasswd user_name
 server nis.test.co.kr
 ypserver nis.test.co.kr
 domain test.co.kr
+```
 =========================================================
 
 
-#SAMBA
+#SAMBA  
 ---------------------------------------------------------
+```
 *SEVER-SIDE
 /etc/rc.d/init.d/smb start
 service smb restart
@@ -119,11 +124,13 @@ smbpasswd -x posein
 smbpasswd -d posein
 pdbedit -a posein
 pdbedit -L -v
+```
 =========================================================
 
 
-#NFS (Newtwork File System)
+#NFS (Newtwork File System)  
 ---------------------------------------------------------
+```
 *SERVER-SIDE
 service rpcbind start
 service nfs start
@@ -152,11 +159,13 @@ mount 192.168.1.1:/nfs_directory2 /mnt
 
 /etc/fstab
 192.168.1.1:/nfs_diretory3 /mnt nfs timeo=15,soft,retrans=3 0 0
+```
 =========================================================
 
 
-#vsftpd (FTP)
+#vsftpd (FTP)  
 ---------------------------------------------------------
+```
 *SERVER-SIDE
 service vsftpd start
 
@@ -173,11 +182,13 @@ xferlog_enable=YES
 
 userlist_deny Default: YES
 /etc/vsftpd/user_list
+```
 =========================================================
 
 
 #sendmail
 ---------------------------------------------------------
+```
 *SERVER-SIDE
 yum install sendmail
 yum install devecot
@@ -219,11 +230,13 @@ vi ~/.forward
 posein@naver.com
 posein@gmail.com
 chmod 600 .forward
+```
 =========================================================
 
 
 #DNS
 ---------------------------------------------------------
+```
 *SERVER-SIDE
 service named start
 
@@ -297,11 +310,13 @@ PTR : ip address to domain for reverse zone
 
 named-checkconf /etc/named.conf
 named-checkzone www /var/named/named.localhost
+```
 =========================================================
 
 
 #TCP wrapper , xinetd
 ---------------------------------------------------------
+```
 /etc/hosts.deny <- work later
 ALL : ALL
 
@@ -348,11 +363,13 @@ service telent
 	port	= 8080
 	nice	= 10
 }
+```
 =========================================================
 
 
 #Squid ( proxy )
 ---------------------------------------------------------
+```
 /etc/squid/squid.conf
 http_port 3128
 cache_dir ufs /var/spool/squid 100 16 256 
@@ -387,11 +404,13 @@ acl exploit dstdomain .exploit-db.com
 
 http_access deny exploit
 http_access allow all
+```
 =========================================================
 
 
 #DHCP ( Dynamic Host Configuration Protocol )
 ---------------------------------------------------------
+```
 /etc/dhcp/dhcpd.conf
 
 service dhcpd start
@@ -410,18 +429,26 @@ host passacaglia {
   filename "vmunix.passacaglia";
   server-name "toccata.fugue.com";
 }
+```
 =========================================================
 
 
-#VNC , NTP
+#VNC 
 ---------------------------------------------------------
+```
 /etc/sysconfig/vncservers
 VNCSERVERS="2:root"
 VNCSERVERARGS[2]="-geoetry 1024x768"
 
 vncpasswd
 service vncserver start
+```
+=========================================================
 
+
+#NTP
+---------------------------------------------------------
+```
 /etc/ntp.conf
 driftfile /var/lib/ntp/drift
 restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap
@@ -430,11 +457,13 @@ server time.bora.net
 
 ntpq 
 ntpdate 192.168.1.80
+```
 =========================================================
 
 
-#iptables ( firewalld )
+#iptables and firewalld
 ---------------------------------------------------------
+```
 #show list
 iptables -L
 iptables-save
@@ -470,14 +499,17 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT 1.235.51.26
 
 #firewalld
 firewall --list-all
-firewalld --add-service=http --zone=public --permanent 
+firewalld --add-service=http --zone=public --permanent
+```
 =========================================================
 
 
-#network range
+#tips) network range
 ---------------------------------------------------------
+```
 #show list
 192.168.1 #sendmail
 192.168.1.0/24 #xinetd, DNS
 192.168.1.0/255.255.255.0 #most of all
+```
 =========================================================
