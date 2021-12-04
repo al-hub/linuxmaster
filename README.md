@@ -1,5 +1,21 @@
 # linuxmaster
 
+### do you know the meaining of linux command?  
+umask 022    
+chmod 1660  
+grub  
+
+### structure of directory
+```
+/bin 기본명령어
+/etc 설정
+/usr 응용프로그램
+/proc 프로세스
+/var/log 동적파일로그
+/lib 응응프로그램(ldd , .... module.dep)
+/dev 장치 드라이브 (가상디렉터리 )
+```
+
 ### usefull keyword
 [apropos](https://en.wikipedia.org/wiki/Apropos_(Unix))  
 man -k keyword  
@@ -9,6 +25,35 @@ read with space bar
 document /usr/share/doc  
 
 실기요약 https://las311.tistory.com/16  
+
+```
+ssh -p 22 id@host
+netstat -alp
+vmstat
+
+ldd /bin/cat
+rpm -qf
+    -qi
+    
+nohup &
+smbclient -L //host/share
+
+mkswap 하드디스크를 메모리처럼
+
+crontab
+*/10 * * * * 
+
+/proc/
+/var/log/
+
+fdisk -l
+```
+### 암기  
+네트웍표기법  
+sendmail    192.168.1  
+xinetd, DNS 192.168.1.0/25  
+else        192.168.1.0/255.255.255.0  
+
 
 
 ### centos virtualbox 해상도조정  
