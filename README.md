@@ -22,9 +22,7 @@ man -k keyword
 man 5 command  
 man 8 command  
 read with space bar  
-document /usr/share/doc  
-
-실기요약 https://las311.tistory.com/16  
+document /usr/share/doc    
 
 ```
 ssh -p 22 id@host
@@ -185,6 +183,10 @@ lpinfo --make-and-model samsung -m | grep my_priner
 lpr -P NAME -H 192.168.1.69:631 document.txt
 ```
 
+### refence site 
+[개념잡기](https://wiseworld.tistory.com/category/%EA%B3%B5%EB%B6%80%EB%B0%A9/%EB%A6%AC%EB%88%85%EC%8A%A4) 
+[실기요약](https://las311.tistory.com/16)
+[개념잡기](https://wiseworld.tistory.com/category/%EA%B3%B5%EB%B6%80%EB%B0%A9/%EB%A6%AC%EB%88%85%EC%8A%A4)
 ### trend(22)
 ```
 트렌트코리아(22) - 최지혜
