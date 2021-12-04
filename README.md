@@ -16,7 +16,7 @@ grub
 /dev 장치 드라이브 (가상디렉터리 )
 ```
 
-### usefull keyword
+### usefull keyword for me
 [apropos](https://en.wikipedia.org/wiki/Apropos_(Unix))  
 man -k keyword  
 man 5 command  
