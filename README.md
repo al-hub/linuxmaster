@@ -1,6 +1,6 @@
 # linuxmaster
 
-### do you know the meaining of linux command?  
+### do you know the meaining of this linux command?  
 umask 022    
 chmod 1660  
 grub  
