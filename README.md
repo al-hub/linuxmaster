@@ -188,6 +188,7 @@ lpr -P NAME -H 192.168.1.69:631 document.txt
 [실기요약](https://las311.tistory.com/16)  
 [기출풀기](https://q.fran.kr/%ec%8b%9c%ed%97%98/%eb%a6%ac%eb%88%85%ec%8a%a4%eb%a7%88%ec%8a%a4%ed%84%b0%201%ea%b8%89)  
 [기출해설](https://m.blog.naver.com/is_king?categoryNo=37&proxyReferer=)  
+[LPIC](https://lpickorea.org/)  
 
 
 ### trend(22)
