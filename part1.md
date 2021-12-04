@@ -1,5 +1,6 @@
-# user
+# user  
 ---------------------------------------------------------
+```
 groupadd linux
 mkdir /home-mc/posein
 useradd posein -d /home-mc/posein -g linux
@@ -59,11 +60,13 @@ lastlog #last login information for each user
 lastlog -u posein
 lastlog -t 3 		#inner 3day
 lastlog -b 3 		#before 3day
+```
 ========================================================
 
 
-# owner permission 
+# owner permission  
 ---------------------------------------------------------
+```
 Set-UID 4 100 #temporary apply sudo,  rwx -> rws or rwS
 Set-GID 2 010 #temporary apply group, rwx -> rwx or rwS
 Sticky  1 001 #only make (no delete)  rwx -> rwt or rwT
@@ -75,11 +78,13 @@ chmod 3070 /project
 umask 022
 defualt directory 777 - 022 = 755 drwxr-xr-x
 default file      666 - 022 = 644 -rw-r--r--
+```
 ========================================================
 
 
 # file system
 ---------------------------------------------------------
+```
 ext2(2GB), ext3(16TB), ext4(1EB), xfs(8EB), vfat(win FAT32), nfs, cifs
 mount -t ext4 -o ro /dev/sdb1 /mmn
 mount -t cifs -o useranme=admin,pasword='1234' //192.168.1.35/data /net_drive
@@ -156,11 +161,13 @@ repquota /home   	#group: repquota -g /home
 *LINK
 ln src.file hard-link.file
 ln -s src.file soft-link.file
+```
 ========================================================
 
 
-# processor manage
+# processor manage  
 ---------------------------------------------------------
+```
 ps -ef
 ps aux
 
@@ -191,11 +198,13 @@ ls -l /proc/PID/exe
 
 crontab -e -u posein		
 0/10 * * * * /etch/10mintue.sh		#* * * * * #min hour day month week
+```
 ========================================================
 
 
-# inatall (configure -> make -> make install)
+# inatall (configure -> make -> make install)  
 ---------------------------------------------------------
+```
 tar cvf posein.tar posein/
 tar Jxvf php.tar.xz -C /usr/local/src
 
@@ -225,11 +234,13 @@ yum remove telnet-server
 libarary
 /etc/ld.so.conf
 ldconfig -p 
+```
 ========================================================
 
 
-# Module
+# Module  
 ---------------------------------------------------------
+```
 /lib/modules/3...../kernel/dirvers/acpi
 lsmod
 insmod cdrom.ko
@@ -253,11 +264,13 @@ make bzImage			#kernel image
 make modules
 make modules_install
 make install
+```
 ========================================================
 
 
-# addtional device
+# addtional device  
 ---------------------------------------------------------
+```
 *add disk
 fdisk -l
 fdisk /dev/sdb
@@ -271,11 +284,13 @@ vi /etc/fstab
 *print
 lpr -# 2 -P ML-2070 part1.txt
 lp -n 2 -P ML-2070 part1.txt
+```
 ========================================================
 
 
-# rsyslog
+# rsyslog  
 ---------------------------------------------------------
+```
 service rsyslog restart
 /etc/rsyslog.conf
 facility.priority action	#facility: cron, auth, authpriv, kern, mail
@@ -305,11 +320,13 @@ logrotate -f /etc/logrotate.conf
 /var/log/secure		#auth log
 /var/log/maillog	#sendmail, dovecot
 /var/log/dmesg		#boot log
+```
 ========================================================
 
 
-# security
+# security  
 ---------------------------------------------------------
+```
 grub password
 grub
 md5crypt
@@ -344,11 +361,13 @@ getfacl	/etc/passwd		#file access control list
 setfacl	-m u:posein:rw test.txt
 
 nmap -O -p 1-1024 localhost
+```
 ========================================================
 
 
-# backup
+# backup  
 ---------------------------------------------------------
+```
 *tar
 tar cvfp home.tar /home
 tar xvf home.tar
@@ -380,4 +399,5 @@ rsync -av /home /home5			#/home -> /home5
 rsync -avz 192.168.1.35:/home /backup
 rsync -avz -e ssh root@192.168.1.35:/home /backup
 rsync -av /home 192.168.1.35:/backup
+```
 ========================================================
