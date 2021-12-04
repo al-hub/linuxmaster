@@ -21,8 +21,8 @@ grub
 man -k keyword  
 man 5 command  
 man 8 command  
-read with space bar  
-document /usr/share/doc    
+
+/usr/share/doc    
 
 ```
 ssh -p 22 id@host
@@ -145,23 +145,6 @@ cat ~/.ssh/id_rsa.pub
 *Server register (setting /etc/ssh/sshd_config)
 ~/.ssh/authorized_keys
 ```
-
-### how to copy on tmux screen  
-```
-C-b [  
-spacebar
-...
-enter
-C-b ]
-```
-
-tmux set-option -g mode-keys vi   
-or  
-set-option -g mode-keys vi   
-at ~/.tmux.conf  
-source-file ~/.tmux.conf  
-on
-
 
 ### printer setting [CUPS](https://zosystem.tistory.com/196)
 ```
