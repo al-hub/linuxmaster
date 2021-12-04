@@ -186,8 +186,16 @@ lpr -P NAME -H 192.168.1.69:631 document.txt
 ### refence site 
 [개념잡기](https://wiseworld.tistory.com/category/%EA%B3%B5%EB%B6%80%EB%B0%A9/%EB%A6%AC%EB%88%85%EC%8A%A4)  
 [실기요약](https://las311.tistory.com/16)  
-[기출풀기](https://q.fran.kr/%ec%8b%9c%ed%97%98/%eb%a6%ac%eb%88%85%ec%8a%a4%eb%a7%88%ec%8a%a4%ed%84%b0%201%ea%b8%89)  
+
+[기출연습](https://q.fran.kr/%ec%8b%9c%ed%97%98/%eb%a6%ac%eb%88%85%ec%8a%a4%eb%a7%88%ec%8a%a4%ed%84%b0%201%ea%b8%89)  
 [기출해설](https://m.blog.naver.com/is_king?categoryNo=37&proxyReferer=)  
+
+[후기&팁1](https://jhnyang.tistory.com/258)  
+[후기&팁2](https://tragramming.tistory.com/89)  
+[후기&팁3](https://limetimeline.tistory.com/314)  
+[후기&팁4](https://minggu92.tistory.com/55)  
+[이슈](https://okky.kr/article/939508)  
+  
 [LPIC](https://lpickorea.org/)  
 
 
