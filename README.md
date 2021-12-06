@@ -2,7 +2,7 @@
 
 ### do you know the meaining of this linux command?  
 umask 022    
-chmod 1660  
+chmod 1777 tmp (or chomd o+t tmp)
 grub  
 
 ### structure of directory
