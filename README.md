@@ -182,6 +182,8 @@ lpr -P NAME -H 192.168.1.69:631 document.txt
 [LPIC](https://lpickorea.org/)  
 
 
+[etc-linux_history](https://12bme.tistory.com/220?category=682900)
+
 ### trend(22)
 ```
 트렌트코리아(22) - 최지혜
